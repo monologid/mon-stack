@@ -1,0 +1,17 @@
+{
+  "name": "mon-stack",
+  "version": "0.1.0",
+  "description": "A blueprint project for faster web app development using NextJS and Strapi.",
+  "scripts": {
+    "backend": "pnpm --filter @mon-stack/backend",
+    "frontend": "pnpm --filter @mon-stack/frontend"
+  },
+  "keywords": [
+    "monolog",
+    "monolog stack",
+    "mon stack",
+    "mon-stack"
+  ],
+  "author": "Faris <faris@monolog.id>",
+  "license": "Apache-2.0"
+}
