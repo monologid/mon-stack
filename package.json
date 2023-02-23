@@ -4,7 +4,9 @@
   "description": "A blueprint project for faster web app development using NextJS and Strapi.",
   "scripts": {
     "backend": "pnpm --filter @mon-stack/backend",
-    "frontend": "pnpm --filter @mon-stack/frontend"
+    "frontend": "pnpm --filter @mon-stack/frontend",
+
+    "docker:up": "docker compose up -d"
   },
   "keywords": [
     "monolog",
