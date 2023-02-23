@@ -32,7 +32,7 @@ const renderField = (field: FieldSchema, onChange: any, className: any) => {
 	switch (field.kind) {
 		case 'select':
 			return (
-				<Select {...field} onChange={onChange}>
+				<Select {...field} onChange={onChange} className={className?.field || null}>
 					<option value={''}>Please select</option>
 					{field.options?.map((option: SelectOptionSchema, i: number) => (
 						<option key={i} value={option.value}>
@@ -61,6 +61,6 @@ const renderField = (field: FieldSchema, onChange: any, className: any) => {
 				</div>
 			);
 		default:
-			return <Input type={field.kind} onChange={onChange} {...field} />;
+			return <Input type={field.kind} onChange={onChange} {...field} className={className?.field || null} />;
 	}
 };

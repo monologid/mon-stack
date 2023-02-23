@@ -30,6 +30,7 @@ export interface SelectOptionSchema {
 }
 
 export interface ClassNameSchema {
-	container: string;
-	label: string;
+	container?: string;
+	field?: string;
+	label?: string;
 }
