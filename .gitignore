@@ -77,6 +77,9 @@ typings/
 
 # Next.js build output
 .next
+fallback-*.js
+sw.js
+workbox-*.js
 
 # Nuxt.js build / generate output
 .nuxt
