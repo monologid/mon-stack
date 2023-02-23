@@ -33,4 +33,5 @@ export interface ClassNameSchema {
 	container?: string;
 	field?: string;
 	label?: string;
+	rootContainer?: string;
 }

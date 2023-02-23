@@ -15,7 +15,7 @@ export const Form: FC<FormProps> = ({ fields, data, setData, className }) => {
 	};
 
 	return (
-		<div className={'space-y-5'}>
+		<div className={`${className?.rootContainer || 'space-y-5'}`}>
 			{fields.map((field: FieldSchema, i: number) => (
 				<div key={i} className={`space-y-2 ${className?.container || null}`}>
 					{field.kind != 'checkbox' && field.kind != 'radio' ? (
