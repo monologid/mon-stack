@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cortex_intents",
+  "info": {
+    "singularName": "cortex-intent",
+    "pluralName": "cortex-intents",
+    "displayName": "Cortex Intent",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "intent": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "metadata": {
+      "type": "json"
+    },
+    "prompts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cortex-prompt.cortex-prompt",
+      "mappedBy": "intent"
+    },
+    "workflows": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cortex-workflow.cortex-workflow",
+      "mappedBy": "intent"
+    }
+  }
+}

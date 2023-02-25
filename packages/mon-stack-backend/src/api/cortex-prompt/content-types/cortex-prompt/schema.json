@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cortex_prompts",
+  "info": {
+    "singularName": "cortex-prompt",
+    "pluralName": "cortex-prompts",
+    "displayName": "Cortex Prompt"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "intent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cortex-intent.cortex-intent",
+      "inversedBy": "prompts"
+    },
+    "prompt": {
+      "type": "text",
+      "required": true
+    },
+    "language": {
+      "type": "string",
+      "required": false,
+      "default": "en"
+    },
+    "metadata": {
+      "type": "json"
+    }
+  }
+}

@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "description": "A Strapi application",
   "scripts": {
-    "format": "prettier --write ./**/*.ts",
+    "format": "prettier --write **/*.ts",
     "dev": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
@@ -22,7 +22,7 @@
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "31fbff14-475c-42cc-8856-37672369ec47"
+    "uuid": "3e52be5d-73e9-4ee8-8c01-708cfe99d0b9"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
@@ -30,6 +30,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "domain-browser": "^4.22.0"
+    "prettier": "^2.8.4"
   }
 }

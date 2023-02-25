@@ -1,4 +1,5 @@
 import Cortex from './services/cortex';
+import Bootstraps from './bootstraps';
 
 export default {
 	/**
@@ -16,7 +17,7 @@ export default {
 	 * This gives you an opportunity to set up your data model,
 	 * run jobs, or perform some special logic.
 	 */
-	bootstrap(/*{ strapi }*/) {
-		if (process.env.CORTEX_ENABLED == 'true') new Cortex().train().then(null);
+	async bootstrap(/*{ strapi }*/) {
+		await new Bootstraps().init();
 	},
 };
