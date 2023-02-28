@@ -4,8 +4,7 @@
   "info": {
     "singularName": "cortex-workflow",
     "pluralName": "cortex-workflows",
-    "displayName": "Cortex Workflow",
-    "description": ""
+    "displayName": "Cortex Workflow"
   },
   "options": {
     "draftAndPublish": false
@@ -13,30 +12,19 @@
   "pluginOptions": {},
   "attributes": {
     "intent": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::cortex-intent.cortex-intent",
-      "inversedBy": "workflows"
-    },
-    "graph": {
-      "type": "json",
-      "required": true
-    },
-    "workflow": {
-      "type": "json",
-      "required": true
-    },
-    "integration": {
-      "type": "json"
-    },
-    "version": {
       "type": "string",
       "required": true
     },
-    "isPublished": {
-      "type": "boolean",
-      "default": false,
-      "required": false
+    "schema": {
+      "type": "json",
+      "required": true
+    },
+    "operation": {
+      "type": "json",
+      "required": true
+    },
+    "metadata": {
+      "type": "json"
     }
   }
 }

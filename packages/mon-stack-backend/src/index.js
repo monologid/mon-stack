@@ -1,7 +1,8 @@
-import Cortex from './services/cortex';
-import Bootstraps from './bootstraps';
+'use strict';
 
-export default {
+const CortexBootStrap = require('./modules/cortex/cortex.bootstrap');
+
+module.exports = {
 	/**
 	 * An asynchronous register function that runs before
 	 * your application is initialized.
@@ -17,7 +18,7 @@ export default {
 	 * This gives you an opportunity to set up your data model,
 	 * run jobs, or perform some special logic.
 	 */
-	async bootstrap(/*{ strapi }*/) {
-		await new Bootstraps().init();
+	async bootstrap({ strapi }) {
+		await new CortexBootStrap({ strapi }).init();
 	},
 };

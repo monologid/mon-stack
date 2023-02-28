@@ -12,18 +12,15 @@
   "pluginOptions": {},
   "attributes": {
     "intent": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::cortex-intent.cortex-intent",
-      "inversedBy": "prompts"
+      "type": "string",
+      "required": true
     },
     "prompt": {
       "type": "text",
       "required": true
     },
-    "language": {
+    "locale": {
       "type": "string",
-      "required": false,
       "default": "en"
     },
     "metadata": {

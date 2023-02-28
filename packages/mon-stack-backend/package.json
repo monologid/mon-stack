@@ -4,32 +4,37 @@
   "version": "0.1.0",
   "description": "A Strapi application",
   "scripts": {
-    "format": "prettier --write **/*.ts",
+    "format": "prettier --write **/*.js",
     "dev": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
     "build:docker": "docker build . -t",
     "strapi": "strapi"
   },
+  "devDependencies": {
+    "prettier": "^2.8.4"
+  },
   "dependencies": {
+    "@slack/bolt": "^3.12.2",
     "@strapi/plugin-i18n": "4.6.2",
     "@strapi/plugin-users-permissions": "4.6.2",
     "@strapi/strapi": "4.6.2",
+    "cross-fetch": "^3.1.5",
+    "moment": "^2.29.4",
     "mysql": "2.18.1",
-    "node-nlp": "^4.26.1"
+    "node-fetch": "^3.3.0",
+    "node-nlp": "^4.26.1",
+    "telegraf": "^4.11.2"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "3e52be5d-73e9-4ee8-8c01-708cfe99d0b9"
+    "uuid": "2afc3179-df84-407e-9267-b64a5191c422"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT",
-  "devDependencies": {
-    "prettier": "^2.8.4"
-  }
+  "license": "MIT"
 }

@@ -4,8 +4,7 @@
   "info": {
     "singularName": "cortex-intent",
     "pluralName": "cortex-intents",
-    "displayName": "Cortex Intent",
-    "description": ""
+    "displayName": "Cortex Intent"
   },
   "options": {
     "draftAndPublish": false
@@ -21,18 +20,6 @@
     },
     "metadata": {
       "type": "json"
-    },
-    "prompts": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::cortex-prompt.cortex-prompt",
-      "mappedBy": "intent"
-    },
-    "workflows": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::cortex-workflow.cortex-workflow",
-      "mappedBy": "intent"
     }
   }
 }
