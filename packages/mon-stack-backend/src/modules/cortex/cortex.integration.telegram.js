@@ -1,4 +1,5 @@
 const { Telegraf } = require('telegraf');
+const CortexOperation = require('./cortex.operation');
 
 class CortexIntegrationTelegram {
 	constructor() {
@@ -7,17 +8,42 @@ class CortexIntegrationTelegram {
 		this.bot = new Telegraf(token);
 	}
 
-	init() {
+	async init() {
 		this.startEventListener();
-		this.bot.launch().then(null);
+		await this.bot.launch();
 		process.once('SIGINT', () => this.bot.stop('SIGINT'));
 		process.once('SIGTERM', () => this.bot.stop('SIGTERM'));
 	}
 
 	startEventListener() {
 		this.bot.on('text', async (ctx) => {
-			await ctx.reply('hello world');
+			const profile = this.getUserProfile({ ctx });
+			await this.onMessage({ ctx, profile });
 		});
+	}
+
+	getUserProfile({ ctx }) {
+		const { id, first_name: firstName, username, language_code: language } = ctx.message.from;
+		return { id, firstName, username, language };
+	}
+
+	async onMessage({ ctx, profile }) {
+		let cortexOperation = new CortexOperation({ userId: profile.id, prompt: ctx.message.text });
+		await cortexOperation.init();
+
+		const result = await cortexOperation.run({ platform: 'telegram', userInput: ctx.message.text });
+		switch (result.kind) {
+			case 'api':
+				break;
+			case 'function':
+				break;
+			default:
+				if (result.message) await ctx.reply(result.message);
+		}
+
+		if (cortexOperation.isNextStep() && result.stepState !== 'waiting_input') {
+			await this.onMessage({ ctx, profile });
+		}
 	}
 }
 

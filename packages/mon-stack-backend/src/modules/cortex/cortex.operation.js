@@ -23,12 +23,12 @@ class CortexOperation {
 
 		if (!this.userState || (this.userState && !this.userState.index)) {
 			const context = await new CortexService().getContext({ prompt: this.prompt });
-			const { intent } = context;
+			const intent = context && context.intent ? context.intent : null;
 
 			const workflow = await strapi.db
 				.query('api::cortex-workflow.cortex-workflow')
 				.findOne({ where: { intent } });
-			const { operation } = workflow;
+			const operation = workflow && workflow.operation ? workflow.operation : null;
 
 			const data = {
 				index: 0,
@@ -59,9 +59,18 @@ class CortexOperation {
 	}
 
 	async run({ platform, userInput }) {
+		if (!this.operation || (this.operation && !this.operation[this.userState.index])) {
+			await this.updateUserState(null);
+			return {
+				...this.userState,
+				kind: 'error',
+				message: "so sorry, it seems i don't understand the context, please ask Peter Parker to teach me :)",
+			};
+		}
+
 		const { id: operationId, kind, data } = this.operation[this.userState.index];
 
-		let message = data.message;
+		let message = data && data.message ? data.message : '';
 		for (let key in this.userState.operationResult) {
 			if (message) message = message.replaceAll(`{{${key}}}`, this.userState.operationResult[key]);
 		}
@@ -102,7 +111,10 @@ class CortexOperation {
 				returnObj = {
 					...this.userState,
 					kind,
-					message: 'I hope my response was helpful and provided the information you needed :)',
+					message:
+						message.length != 0
+							? message
+							: 'I hope my response was helpful and provided the information you needed :)',
 				};
 				break;
 			case 'function':
