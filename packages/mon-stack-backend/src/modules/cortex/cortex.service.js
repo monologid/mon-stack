@@ -3,7 +3,7 @@ const { NlpManager } = require('node-nlp');
 const nlpManager = new NlpManager({
 	forceNER: true,
 	autoSave: process.env.CORTEX_MODEL_AUTOSAVE_ENABLED == 'true' ? true : false,
-	languages: process.env.CORTEX_LANGUAGES.split(','),
+	languages: process.env.CORTEX_LANGUAGES ? process.env.CORTEX_LANGUAGES.split(',') : ['en'],
 });
 
 class CortexService {
