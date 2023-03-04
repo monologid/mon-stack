@@ -1,15 +1,19 @@
 const CortexState = require('./cortex.state');
 const fetch = require('cross-fetch');
 const CortexService = require('./cortex.service');
+const CortexIAM = require('./cortex.iam');
 
 class CortexOperation {
-	constructor({ userId, context, operation, prompt }) {
+	constructor({ userId, context, operation, prompt, profile }) {
 		this.state = new CortexState();
 		this.userId = userId;
 		this.userState = {};
 		this.context = context;
 		this.operation = operation;
 		this.prompt = prompt;
+		this.profile = profile;
+
+		this.iam = new CortexIAM();
 	}
 
 	async init() {
@@ -65,6 +69,17 @@ class CortexOperation {
 				...this.userState,
 				kind: 'error',
 				message: "so sorry, it seems i don't understand the context, please ask Peter Parker to teach me :)",
+			};
+		}
+
+		const { userRoles } = await this.iam.authenticate({ platform, profile: this.profile });
+		const isAuthorized = await this.iam.authorize({ userRoles, intent: this.context.intent });
+		if (!isAuthorized) {
+			await this.updateUserState(null);
+			return {
+				...this.userState,
+				kind: 'error',
+				message: 'so sorry, it seems you are not authorized to access the context. :(',
 			};
 		}
 

@@ -2,7 +2,7 @@ const CacheRedis = require('../cache/cache.redis');
 
 class CortexIAM {
 	constructor() {
-		this.cache = new CacheRedis({ url: process.env.CORTEX_STATE_CACHE_REDIS_URL }).getClient();
+		this.cache = new CacheRedis({ url: process.env.CORTEX_IAM_CACHE_REDIS_URL }).getClient();
 		this.key = 'cortex:iam:roles';
 	}
 
@@ -26,6 +26,46 @@ class CortexIAM {
 
 		const { roles, rolePermissions } = await this.updateRolesInCache();
 		return { roles, rolePermissions };
+	}
+
+	async authenticate({ platform, profile }) {
+		let username = '';
+		switch (platform) {
+			case 'slack':
+				username = profile.email;
+				break;
+			case 'telegram':
+				username = profile.username;
+				break;
+			default:
+				username = profile.email;
+		}
+
+		let result = await this.cache.get(`${this.key}:${platform}:${username}`);
+		if (result) return { ...JSON.parse(result) };
+
+		const user = await strapi.db
+			.query('api::cortex-user.cortex-user')
+			.findOne({ where: { platform, username }, populate: ['roles'] });
+		if (!user) {
+			const defaultRole = await strapi.db
+				.query('api::cortex-iam.cortex-iam')
+				.findOne({ where: { role: process.env.CORTEX_IAM_ROLES_DEFAULT } });
+			await strapi.db.query('api::cortex-user.cortex-user').create({
+				data: {
+					username,
+					platform,
+					roles: [defaultRole.id],
+				},
+			});
+
+			result = { userRoles: [defaultRole.role] };
+		} else {
+			result = { userRoles: user.roles.map((item) => item.role) };
+		}
+
+		await this.cache.set(`${this.key}:${platform}:${username}`, JSON.stringify(result));
+		return { ...result };
 	}
 
 	async authorize({ userRoles, intent }) {

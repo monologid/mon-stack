@@ -28,7 +28,7 @@ class CortexIntegrationTelegram {
 	}
 
 	async onMessage({ ctx, profile }) {
-		let cortexOperation = new CortexOperation({ userId: profile.id, prompt: ctx.message.text });
+		let cortexOperation = new CortexOperation({ userId: profile.id, prompt: ctx.message.text, profile });
 		await cortexOperation.init();
 
 		const result = await cortexOperation.run({ platform: 'telegram', userInput: ctx.message.text });

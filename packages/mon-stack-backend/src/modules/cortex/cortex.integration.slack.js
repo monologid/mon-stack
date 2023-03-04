@@ -43,7 +43,7 @@ class CortexIntegrationSlack {
 	}
 
 	async onMessage({ client, event, profile }) {
-		let cortexOperation = new CortexOperation({ userId: profile.channel, prompt: event.text });
+		let cortexOperation = new CortexOperation({ userId: profile.channel, prompt: event.text, profile });
 		await cortexOperation.init();
 
 		const result = await cortexOperation.run({ platform: 'slack', userInput: event.text });
