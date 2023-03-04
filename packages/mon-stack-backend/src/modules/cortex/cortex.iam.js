@@ -28,6 +28,15 @@ class CortexIAM {
 		return { roles, rolePermissions };
 	}
 
+	async resetUserRoles({ platform, username }) {
+		await this.cache.del(`${this.key}:${platform}:${username}`);
+		const user = await strapi.db
+			.query('api::cortex-user.cortex-user')
+			.findOne({ where: { platform, username }, populate: ['roles'] });
+		const roles = { userRoles: user.roles.map((item) => item.role) };
+		await this.cache.set(`${this.key}:${platform}:${username}`, JSON.stringify(roles));
+	}
+
 	async authenticate({ platform, profile }) {
 		let username = '';
 		switch (platform) {
