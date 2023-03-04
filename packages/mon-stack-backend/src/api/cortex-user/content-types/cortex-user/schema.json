@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cortex_users",
+  "info": {
+    "singularName": "cortex-user",
+    "pluralName": "cortex-users",
+    "displayName": "Cortex User",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "username": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "platform": {
+      "type": "enumeration",
+      "enum": [
+        "slack",
+        "telegram",
+        "web"
+      ],
+      "required": true
+    },
+    "metadata": {
+      "type": "json"
+    },
+    "roles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cortex-iam.cortex-iam"
+    }
+  }
+}
