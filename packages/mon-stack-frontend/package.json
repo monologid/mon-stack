@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "format": "prettier --write src/**/*.{ts,tsx}",
+    "format": "prettier --write ./src",
     "dev": "next dev",
     "build": "next build",
     "build:docker": "docker build . -t",
@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mon-stack/backend-client": "workspace:^0.1.0",
     "@next/font": "13.1.6",
     "@types/node": "18.14.0",
     "@types/react": "18.0.28",
