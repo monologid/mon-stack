@@ -6,7 +6,7 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "format": "prettier --write ./src",
-    "build": "pnpm format && pnpm lint && tsc",
+    "build": "pnpm format && tsc",
     "dev": "tsc -w",
     "lint": "eslint ./src --ext .ts",
     "test": "jest"
