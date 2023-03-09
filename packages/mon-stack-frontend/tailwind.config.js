@@ -9,6 +9,13 @@ module.exports = {
     require("tailwindcss-animate")
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'dark-primary': '#191B21',
+        'input-dark-primary': '#111317',
+        'item-primary': '#21232B',
+        'hover:item-primary': '#203762'
+      }
+    },
   },
 }
