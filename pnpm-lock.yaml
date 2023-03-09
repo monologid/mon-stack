@@ -81,6 +81,7 @@ importers:
   packages/mon-stack-frontend:
     specifiers:
       '@mon-stack/backend-client': workspace:^0.1.0
+      '@motionone/utils': ^10.15.1
       '@next/font': 13.1.6
       '@tailwindcss/forms': ^0.5.3
       '@types/jsonwebtoken': ^9.0.1
@@ -93,10 +94,13 @@ importers:
       clsx: ^1.2.1
       eslint: 8.34.0
       eslint-config-next: 13.1.6
+      framer-motion: ^10.2.3
       jsonwebtoken: ^9.0.0
       lucide-react: ^0.115.0
+      moment: ^2.29.4
       next: 13.1.6
       next-pwa: ^5.6.0
+      next-themes: ^0.2.1
       nookies: ^2.5.2
       postcss: ^8.4.21
       prettier: ^2.8.4
@@ -108,6 +112,7 @@ importers:
       typescript: 4.9.5
     dependencies:
       '@mon-stack/backend-client': link:../mon-stack-backend-client
+      '@motionone/utils': 10.15.1
       '@next/font': 13.1.6
       '@types/node': 18.14.0
       '@types/react': 18.0.28
@@ -116,10 +121,13 @@ importers:
       clsx: 1.2.1
       eslint: 8.34.0
       eslint-config-next: 13.1.6_7kw3g6rralp5ps6mg3uyzz6azm
+      framer-motion: 10.2.3_biqbaboplfbrettd7655fr4n2y
       jsonwebtoken: 9.0.0
       lucide-react: 0.115.0_react@18.2.0
+      moment: 2.29.4
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       next-pwa: 5.6.0_next@13.1.6
+      next-themes: 0.2.1_3vryta7zmbcsw4rrqf4axjqggm
       nookies: 2.5.2
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -1543,6 +1551,7 @@ packages:
 
   /@emotion/is-prop-valid/0.8.8:
     resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
+    requiresBuild: true
     dependencies:
       '@emotion/memoize': 0.7.4
     dev: false
@@ -2378,6 +2387,18 @@ packages:
   /@microsoft/recognizers-text/1.3.0:
     resolution: {integrity: sha512-0gUhtS/0qSF6veB3Olu55IuJ0Skwg4u1IbJX9KFj1QeK8z6cw69/p637IPD2NgXLlXCy2HEqLvUW/mgbDp3rWg==}
     engines: {node: '>=10.3.0'}
+    dev: false
+
+  /@motionone/types/10.15.1:
+    resolution: {integrity: sha512-iIUd/EgUsRZGrvW0jqdst8st7zKTzS9EsKkP+6c6n4MPZoQHwiHuVtTQLD6Kp0bsBLhNzKIBlHXponn/SDT4hA==}
+    dev: false
+
+  /@motionone/utils/10.15.1:
+    resolution: {integrity: sha512-p0YncgU+iklvYr/Dq4NobTRdAPv9PveRDUXabPEeOjBLSO/1FNB2phNTZxOxpi1/GZwYpAoECEa0Wam+nsmhSw==}
+    dependencies:
+      '@motionone/types': 10.15.1
+      hey-listen: 1.0.8
+      tslib: 2.5.0
     dev: false
 
   /@next/env/13.1.6:
@@ -8891,6 +8912,24 @@ packages:
       map-cache: 0.2.2
     dev: false
 
+  /framer-motion/10.2.3_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-+TBxfia8Ym/lYSvTAhome7LYFIR8fKhImuln5zcp9D8nFI2wNSDdBRtK5WoWTyjHXJ7efv5xv376Ma85zHhtUg==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.5.0
+    optionalDependencies:
+      '@emotion/is-prop-valid': 0.8.8
+    dev: false
+
   /fresh/0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
     engines: {node: '>= 0.6'}
@@ -9352,6 +9391,10 @@ packages:
   /helmet/4.6.0:
     resolution: {integrity: sha512-HVqALKZlR95ROkrnesdhbbZJFi/rIVSoNq6f3jA/9u6MIbTsPh3xZwihjeI5+DO/2sOV6HMHooXcEOuwskHpTg==}
     engines: {node: '>=10.0.0'}
+    dev: false
+
+  /hey-listen/1.0.8:
+    resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
     dev: false
 
   /highlight.js/10.7.3:
@@ -11928,6 +11971,18 @@ packages:
       - supports-color
       - uglify-js
       - webpack
+    dev: false
+
+  /next-themes/0.2.1_3vryta7zmbcsw4rrqf4axjqggm:
+    resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}
+    peerDependencies:
+      next: '*'
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      next: 13.1.6_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /next/13.1.6_biqbaboplfbrettd7655fr4n2y:

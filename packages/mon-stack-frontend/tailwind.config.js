@@ -3,11 +3,12 @@ module.exports = {
   content: [
     'src/**/*.{ts,tsx}'
   ],
-  theme: {
-    extend: {},
-  },
+  darkMode: 'class',
   plugins: [
     require('@tailwindcss/forms'),
     require("tailwindcss-animate")
   ],
+  theme: {
+    extend: {},
+  },
 }
