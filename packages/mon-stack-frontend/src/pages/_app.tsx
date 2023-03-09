@@ -4,10 +4,23 @@ import { ThemeProvider } from 'next-themes';
 import { AnimatePresence } from 'framer-motion';
 
 export default function App({ Component, pageProps, router }: AppProps) {
-  const { theme }: any = Component
+  const { theme }: any = Component;
+
+  const animatePresenceProps: any = {
+    mode: 'wait',
+    initial: false,
+    onExitComplete: () => window.scrollTo(0, 0),
+  };
+
+  const themeProviderProps: any = {
+    attribute: 'class',
+    forcedTheme: theme || null,
+    enableSystem: true,
+  };
+
   return (
-    <AnimatePresence mode='wait' initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
-      <ThemeProvider attribute={'class'} enableSystem={true} forcedTheme={theme || null}>
+    <AnimatePresence {...animatePresenceProps}>
+      <ThemeProvider {...themeProviderProps}>
         <Component {...pageProps} key={router.asPath} />
       </ThemeProvider>
     </AnimatePresence>

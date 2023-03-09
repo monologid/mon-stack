@@ -7,4 +7,4 @@ export default function Home(props: any) {
   return <BaseLayout title={'MON Stack'} {...props}></BaseLayout>;
 }
 
-Home.theme = 'dark'
+Home.theme = 'dark';
