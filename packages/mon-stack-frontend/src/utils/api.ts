@@ -19,8 +19,8 @@ export class ApiUtil implements IApiUtil {
 
   // TODO: implement nookies if headers.authorization is empty
   getAccessToken(): any {
-    const { headers }: any = this.req
-    return headers.authorization ? headers.authorization.replaceAll('Bearer ', '') : null
+    const { headers }: any = this.req;
+    return headers.authorization ? headers.authorization.replaceAll('Bearer ', '') : null;
   }
 
   json({ data, error }: ApiResponseSchema) {
@@ -34,8 +34,8 @@ export class ApiUtil implements IApiUtil {
   errorLog({ error }: ApiLogSchema): any {
     console.dir({
       filepath: this.filepath,
-      error
-    })
+      error,
+    });
 
     return this;
   }
