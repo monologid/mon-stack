@@ -10,12 +10,20 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
+      backgroundColor: {
         'dark-primary': '#191B21',
         'input-dark-primary': '#111317',
         'item-primary': '#21232B',
-        'hover:item-primary': '#203762'
+        'item-primary-hover': '#203762'
+      },
+      textColor: {
+        'font-secondary': '#5E5F68'
       }
     },
   },
+  variants: {
+    extend: {
+      backgroundColor: ['hover']
+    }
+  }
 }

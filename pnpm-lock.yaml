@@ -106,6 +106,7 @@ importers:
       prettier: ^2.8.4
       react: 18.2.0
       react-dom: 18.2.0
+      react-type-animation: ^2.1.2
       tailwind-merge: ^1.10.0
       tailwindcss: ^3.2.7
       tailwindcss-animate: ^1.0.5
@@ -131,6 +132,7 @@ importers:
       nookies: 2.5.2
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-type-animation: 2.1.2_biqbaboplfbrettd7655fr4n2y
       typescript: 4.9.5
     devDependencies:
       '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
@@ -13424,6 +13426,17 @@ packages:
       prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+    dev: false
+
+  /react-type-animation/2.1.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-6/t4Whl87sLR0c8kzvJngTrCV6OVy3jEeUZoe2svVu9VaYr951VD7OeUie1rIyeD8JfpBIqZGYrPFHZQ04XHrw==}
+    peerDependencies:
+      prop-types: ^15.5.4
+      react: '>= 15.0.0'
+      react-dom: '>= 15.0.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-window/1.8.7_sfoxds7t5ydpegc3knd667wn6m:
