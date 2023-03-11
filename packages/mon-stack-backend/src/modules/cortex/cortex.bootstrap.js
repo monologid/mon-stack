@@ -1,6 +1,7 @@
 const CortexService = require('./cortex.service');
 const CortexIntegrationSlack = require('./cortex.integration.slack');
 const CortexIntegrationTelegram = require('./cortex.integration.telegram');
+const CortexIntegrationWhatsapp = require('./cortex.integration.whatsapp');
 
 class CortexBootstrap {
 	constructor({ strapi }) {
@@ -13,6 +14,7 @@ class CortexBootstrap {
 
 		if (process.env.CORTEX_INTEGRATION_SLACK_ENABLED === 'true') new CortexIntegrationSlack().init();
 		if (process.env.CORTEX_INTEGRATION_TELEGRAM_ENABLED === 'true') new CortexIntegrationTelegram().init();
+    if (process.env.CORTEX_INTEGRATION_WHATSAPP_ENABLED === 'true')new CortexIntegrationWhatsapp().init();
 	}
 
 	async scheduler() {

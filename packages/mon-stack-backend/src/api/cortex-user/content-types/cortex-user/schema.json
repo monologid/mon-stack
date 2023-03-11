@@ -22,7 +22,8 @@
       "enum": [
         "slack",
         "telegram",
-        "web"
+        "web",
+        "whatsapp"
       ],
       "required": true
     },

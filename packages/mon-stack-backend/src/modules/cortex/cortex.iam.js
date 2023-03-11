@@ -46,6 +46,9 @@ class CortexIAM {
 			case 'telegram':
 				username = profile.username;
 				break;
+      case 'whatsapp':
+        username = profile.id;
+        break;
 			default:
 				username = profile.email;
 		}
