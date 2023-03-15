@@ -19,12 +19,7 @@
     },
     "platform": {
       "type": "enumeration",
-      "enum": [
-        "slack",
-        "telegram",
-        "web",
-        "whatsapp"
-      ],
+      "enum": ["slack", "telegram", "web", "whatsapp"],
       "required": true
     },
     "metadata": {

@@ -7,7 +7,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=dev
     volumes:
-      - ./.dev/mariadb/data:/var/lib/mysql
+      - ./.dev/mariadb/data:/var/lib/mysql:rw
+    user: mysql
     ports:
       - 3306:3306
 

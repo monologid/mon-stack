@@ -1,30 +1,9 @@
-const { Client, LocalAuth } = require('whatsapp-web.js');
 const CortexService = require('./cortex.service');
-const qrcode = require('qrcode-terminal');
 const CortexOperation = require('./cortex.operation');
 
 class CortexIntegrationWhatsapp {
-  constructor() {
-    this.bot = new Client({ authStrategy: new LocalAuth() });
-    this.cortex = new CortexService();
-  }
-
-  init() {
-    this.startEventListener();
-    this.bot.on('qr', (qr) => {
-      qrcode.generate(qr, { small: true });
-    });
-    this.bot.on('ready', () => {
-      console.log('[CORTEX] Whatsapp integration is ready');
-    });
-    this.bot.initialize().then(null);
-  }
-
-  startEventListener() {
-    this.bot.on('message', async (message) => {
-      const profile = this.getUserProfile({ message });
-      await this.onMessage({ message, profile });
-    });
+  constructor({ prompt }) {
+    this.prompt = prompt;
   }
 
   getUserProfile({ message }) {
@@ -34,11 +13,6 @@ class CortexIntegrationWhatsapp {
   }
 
   async onMessage({ message, profile }) {
-    if (message.from != message.author) {
-      // This meaning that message came from a group
-      // Then need to check `to` and `mentionIds`
-    }
-
     let cortexOperation = new CortexOperation({ userId: profile.id, prompt: message.body, profile });
     await cortexOperation.init();
 

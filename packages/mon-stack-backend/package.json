@@ -4,24 +4,31 @@
   "version": "0.1.0",
   "description": "A Strapi application",
   "scripts": {
-    "format": "prettier --write **/*.js",
+    "install:yarn": "yarn run install",
+    "format": "prettier --write src/ --write config/",
     "dev": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "build:docker": "docker build . -t",
+    "build:yarn": "yarn run build",
+    "build:docker": "docker build --progress=plain . -t",
     "strapi": "strapi"
   },
   "devDependencies": {
-    "prettier": "^2.8.4"
+    "@babel/eslint-parser": "^7.21.3",
+    "@babel/runtime": "^7.21.0"
   },
   "dependencies": {
     "@slack/bolt": "^3.12.2",
+    "@strapi/design-system": "^1.6.5",
     "@strapi/plugin-i18n": "4.7.0",
     "@strapi/plugin-users-permissions": "4.7.0",
     "@strapi/strapi": "4.7.0",
-    "better-sqlite3": "7.4.6",
+    "axios": "^1.3.4",
+    "codemirror": "5.65.11",
     "cross-fetch": "^3.1.5",
+    "invariant": "^2.2.4",
     "ioredis": "^5.3.1",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mysql": "2.18.1",
     "node-fetch": "^3.3.0",
