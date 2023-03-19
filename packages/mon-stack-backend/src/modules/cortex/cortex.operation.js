@@ -14,10 +14,15 @@ class CortexOperation {
     this.profile = profile;
 
     this.iam = new CortexIAM();
+    this.cacheKey = `user:${this.userId}`;
+  }
+
+  getUserState() {
+    return this.userState;
   }
 
   async init() {
-    this.userState = await this.state.get(this.userId);
+    this.userState = await this.state.get(this.cacheKey);
 
     if (this.userState && this.userState.context && this.userState.context.intent) {
       this.context = this.userState.context;
@@ -47,14 +52,14 @@ class CortexOperation {
       this.context = context;
       this.operation = operation;
 
-      await this.state.set(this.userId, data);
+      await this.state.set(this.cacheKey, data);
     }
   }
 
   async updateUserState(state) {
     const newState = state ? { ...this.userState, ...state } : null;
-    await this.state.set(this.userId, newState);
-    this.userState = await this.state.get(this.userId);
+    await this.state.set(this.cacheKey, newState);
+    this.userState = await this.state.get(this.cacheKey);
   }
 
   isNextStep() {
@@ -84,6 +89,15 @@ class CortexOperation {
       };
     }
 
+    switch (platform) {
+      case 'web':
+        return await this.executeSync({ platform, userInput });
+      default:
+        return await this.execute({ platform, userInput });
+    }
+  }
+
+  async execute({ platform, userInput }) {
     const { id: operationId, kind, data } = this.operation[this.userState.index];
 
     let message = data && data.message ? data.message : '';
@@ -134,7 +148,7 @@ class CortexOperation {
         };
         break;
       case 'function':
-        const stringFn = data[platform];
+        const stringFn = data[platform] ? data[platform] : data['default'];
         const fn = new Function(`return ${stringFn}`)();
         result = await fn({
           result: this.userState.operationResult,
@@ -179,6 +193,33 @@ class CortexOperation {
     }
 
     return returnObj;
+  }
+
+  async executeSync({ platform, userInput }) {
+    // TODO:
+    // once processed, always check the next step,
+    // if kind is input, then return
+    // otherwise keep looping until got kind is end
+
+    let executeSyncResult = this.userState.executeSyncResult ? this.userState.executeSyncResult : [];
+
+    let result = await this.execute({ platform, userInput });
+    switch (result.kind) {
+      case 'input':
+        return result;
+      case 'end':
+        executeSyncResult.push(result);
+        return executeSyncResult;
+      default:
+        switch (result.kind) {
+          case 'message':
+            executeSyncResult.push({ kind: result.kind, message: result.message });
+            break;
+        }
+
+        await this.updateUserState({ executeSyncResult });
+        return await this.executeSync({ platform, userInput });
+    }
   }
 }
 

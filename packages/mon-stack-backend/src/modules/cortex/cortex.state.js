@@ -2,7 +2,7 @@ const CacheRedis = require('../cache/cache.redis');
 
 class CortexState {
   constructor() {
-    this.key = process.env.CORTEX_STATE_CACHE_PREFIX || 'mon-stack-backend';
+    this.key = 'cortex:state';
     this.cache = new CacheRedis({ url: process.env.CORTEX_STATE_CACHE_REDIS_URL }).getClient();
   }
 

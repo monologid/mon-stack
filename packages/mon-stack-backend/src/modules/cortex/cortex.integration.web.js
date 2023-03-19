@@ -1,35 +1,47 @@
-const CortexService = require('./cortex.service');
 const CortexOperation = require('./cortex.operation');
+const jwt = require('jsonwebtoken');
 
-class CortexIntegrationWhatsapp {
-  constructor({ prompt }) {
+class CortexIntegrationWeb {
+  constructor({ prompt, token }) {
     this.prompt = prompt;
+    this.token = token;
   }
 
-  getUserProfile({ message }) {
-    const id = message.author.split('@')[0];
-    console.dir({ message });
-    return { id, fromId: message.from };
+  init() {
+    try {
+      const { id } = jwt.verify(this.token, process.env.JWT_SECRET);
+      return { id };
+    } catch (e) {
+      return {
+        error: {
+          status: 401,
+          name: 'Unauthorized',
+          message: 'Unauthorized access. Invalid token.',
+        },
+      };
+    }
   }
 
-  async onMessage({ message, profile }) {
-    let cortexOperation = new CortexOperation({ userId: profile.id, prompt: message.body, profile });
+  async getUserProfile(id) {
+    if (!id) return { id };
+    const user = await strapi.db.query('plugin::users-permissions.user').findOne({ where: { id } });
+
+    return user;
+  }
+
+  async onMessage({ prompt, profile }) {
+    let cortexOperation = new CortexOperation({ userId: profile.id, prompt, profile });
     await cortexOperation.init();
 
-    const result = await cortexOperation.run({ platform: 'whatsapp', userInput: message.body });
-    switch (result.kind) {
-      case 'api':
-        break;
-      case 'function':
-        break;
-      default:
-        if (result.message) await this.bot.sendMessage(profile.fromId, result.message);
-    }
+    const result = await cortexOperation.run({ platform: 'web', userInput: prompt });
 
     if (cortexOperation.isNextStep() && result.stepState !== 'waiting_input') {
-      await this.onMessage({ message, profile });
+      return await this.onMessage({ prompt, profile });
     }
+
+    if (result.kind == 'input') return { ...result };
+    return result;
   }
 }
 
-module.exports = CortexIntegrationWhatsapp;
+module.exports = CortexIntegrationWeb;

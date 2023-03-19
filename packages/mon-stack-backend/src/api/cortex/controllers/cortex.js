@@ -1,4 +1,5 @@
 const CortexService = require('../../../modules/cortex/cortex.service');
+const CortexIntegrationWeb = require('../../../modules/cortex/cortex.integration.web');
 
 module.exports = {
   async classify(ctx) {
@@ -29,15 +30,36 @@ module.exports = {
   },
 
   async talk(ctx) {
+    const { authorization } = ctx.request.headers;
+    if (!authorization) {
+      ctx.status = 401;
+      return {
+        data: null,
+        error: {
+          status: 401,
+          name: 'Unauthorized',
+          message: 'Unauthorized access',
+        },
+      };
+    }
+
     const { prompt } = ctx.request.body;
-    const cortex = new CortexService();
-    const context = await cortex.getContext(prompt);
-    const { intent } = context;
+    const cortexIntegrationWeb = new CortexIntegrationWeb({
+      prompt,
+      token: authorization.replace('Bearer ', ''),
+    });
+    const { id, error } = cortexIntegrationWeb.init();
+    if (error) {
+      ctx.status = 401;
+      return {
+        data: null,
+        error,
+      };
+    }
 
-    const workflow = await strapi.db
-      .query('api::cortex-workflow.cortex-workflow')
-      .findOne({ where: { intent } });
+    const profile = await cortexIntegrationWeb.getUserProfile(id);
+    const result = await cortexIntegrationWeb.onMessage({ prompt, profile });
 
-    return { data: { prompt } };
+    return { data: result };
   },
 };
