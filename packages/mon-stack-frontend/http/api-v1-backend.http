@@ -1,0 +1,41 @@
+### Auth - Register new account
+
+POST http://localhost:3000/api/v1/backend
+Content-Type: application/json
+
+{
+  "method": "POST",
+  "api": "/api/auth/local/register",
+  "payload": {
+    "username": "ais",
+    "email": "madebyais@gmail.com",
+    "password": "123456"
+  }
+}
+
+### Auth - Login
+
+POST http://localhost:3000/api/v1/backend
+Content-Type: application/json
+
+{
+  "method": "POST",
+  "api": "/api/auth/local",
+  "payload": {
+    "identifier": "madebyais@gmail.com",
+    "password": "123456"
+  }
+}
+
+### Cortex - Talk
+
+POST http://localhost:3000/api/v1/backend
+Content-Type: application/json
+
+{
+  "method": "POST",
+  "api": "/api/v1/cortex/talk",
+  "payload": {
+    "prompt": "hello"
+  }
+}

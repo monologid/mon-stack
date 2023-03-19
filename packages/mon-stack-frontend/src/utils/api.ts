@@ -25,10 +25,10 @@ export class ApiUtil implements IApiUtil {
 
   json({ data, error }: ApiResponseSchema) {
     if (error) {
-      return this.res.status(error.status || 500).json({ error });
+      return this.res.status(error?.status || 500).json({ error });
     }
 
-    this.res.status(data.status || 200).json({ data });
+    this.res.status(data?.status || 200).json({ data });
   }
 
   errorLog({ error }: ApiLogSchema): any {
