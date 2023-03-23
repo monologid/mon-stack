@@ -9,20 +9,14 @@ export type fetchApiParams = {
 
 export async function fetchApi({ url, method = 'GET', headers, data }: fetchApiParams) {
   try {
-    return await axios({ method, url, headers, data })
-      .then(r => r.data || {})
-      .catch(e => {
-        return {
-          data: null,
-          ...e.response.data
-        }
-      });
+    const response: any = await axios({ method, url, headers, data });
+    return response.data || {};
   } catch (e: any) {
-    if (e.response.data) {
+    if (e.response && e.response.data) {
       return {
         data: null,
-        ...e.response.data
-      }
+        ...e.response.data,
+      };
     }
 
     return {
@@ -30,8 +24,8 @@ export async function fetchApi({ url, method = 'GET', headers, data }: fetchApiP
         status: 500,
         name: 'InternalServerError',
         message: 'Something went wrong.',
-        e: e.toString()
-      }
+        e: e.toString(),
+      },
     };
   }
 }

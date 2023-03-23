@@ -4,6 +4,8 @@ import { Input } from '@/components/commons';
 import { TypeAnimation } from 'react-type-animation';
 import useDataState from '@/hooks/use-data-state';
 import SpeechToText from '@/components/speech';
+import { RenderMarkdown } from '@/components/render';
+import { fetchApi } from '@/utils/fetch-api';
 
 export const getServerSideProps = baseGetServerSideProps;
 
@@ -12,6 +14,7 @@ export default function Home(props: any) {
     isTyping: false,
     user: 'MON',
     message: "Hi there, welcome! My name is MON, I'll be assisting you today. What can I help you? :)",
+    messages: []
   });
 
   const onInputKeyDown = async (e: any) => {
@@ -21,20 +24,36 @@ export default function Home(props: any) {
     }
 
     const prompt: string = e.target.value;
-    setState({ isTyping: false, message: 'Processing your prompt ...' });
+    setState({ isTyping: false, message: 'Processing ...', messages: [] });
     e.target.value = '';
 
-    setTimeout(() => {
-      setState({ isTyping: false, message: prompt });
-    }, 3000);
+    setTimeout(async () => {
+      const url: string = '/api/v1/backend'
+      const headers: any = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer demo'
+      }
+      const response = await fetchApi({ url, method: 'POST', data: { method: 'POST', api: '/api/v1/cortex/talk', payload: { prompt } }, headers })
+      const { data } = response
+      if (data.kind == 'input') return setState({ isTyping: false, message: data.message, messages: [] });
+      setState({ isTyping: false, messages: data.result });
+    }, 1000);
   };
 
   const onSpeechFinish = (prompt: string) => {
-    setState({ isTyping: false, user: 'MON', message: 'Processing your prompt ...' });
+    setState({ isTyping: false, user: 'MON', message: 'Processing ...', messages: [] });
 
-    setTimeout(() => {
-      setState({ isTyping: false, user: 'MON', message: `Your message: ${prompt}` });
-    }, 3000);
+    setTimeout(async () => {
+      const url: string = '/api/v1/backend'
+      const headers: any = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer demo'
+      }
+      const response = await fetchApi({ url, method: 'POST', data: { method: 'POST', api: '/api/v1/cortex/talk', payload: { prompt } }, headers })
+      const { data } = response
+      if (data.kind == 'input') return setState({ isTyping: false, message: data.message, messages: [] });
+      setState({ isTyping: false, messages: data.result });
+    }, 1000);
   };
 
   return (
@@ -44,16 +63,24 @@ export default function Home(props: any) {
           <div
             key={state.message}
             className={'w-full bg-input-dark-primary rounded p-3 overflow-y-auto space-y-3'}
-            style={{ maxHeight: 150 }}
           >
             <div className={'font-bold text-xs tracking-wider'}>{state.user}</div>
-            <TypeAnimation
-              key={state.message}
-              cursor={true}
-              sequence={[state.message]}
-              speed={65}
-              className={'custom-cursor'}
-            />
+            {state.message && state.messages.length == 0 ?
+              <TypeAnimation
+                key={state.message}
+                cursor={true}
+                sequence={[state.message]}
+                speed={75}
+                className={'custom-cursor'}
+              /> : null
+            }
+
+            {state.messages.length > 1 ?
+              <>
+              {state.messages.map((item: any, i: number) => (
+                <RenderMarkdown text={item.message} />
+              ))}
+              </> : null}
           </div>
           <div className={'flex items-center space-x-3 bg-input-dark-primary rounded'}>
             <Input

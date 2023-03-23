@@ -15,17 +15,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { method, api, payload }: any = req.body;
     const baseApiUrl: string = process.env.MON_STACK_BACKEND_URL! || process.env.BASE_API_URL!;
     const url: string = `${baseApiUrl}${api}`;
+
     const opts: any = {
       url,
       method,
       headers: {
-        'Content-Type': 'application/json',
-        ...req.headers
+        'Content-Type': req.headers['content-type'] ? req.headers['content-type'] : 'application/json',
+        Authorization: req.headers['authorization'] ? req.headers['authorization'] : '',
       },
       data: payload,
-    }
+    };
     const response: any = await fetchApi(opts);
-    if (response.error) return apiUtil.json({ ...response })
+    if (response.error) return apiUtil.json({ ...response });
 
     apiUtil.json({ data: response.data ? response.data : response });
   } catch (e: any) {
