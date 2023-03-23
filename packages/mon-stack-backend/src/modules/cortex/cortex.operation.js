@@ -209,7 +209,7 @@ class CortexOperation {
         return result;
       case 'end':
         executeSyncResult.push(result);
-        return executeSyncResult;
+        return { kind: result.kind, result: executeSyncResult };
       default:
         switch (result.kind) {
           case 'message':
