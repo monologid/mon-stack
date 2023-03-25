@@ -2,6 +2,7 @@ const CortexState = require('./cortex.state');
 const fetch = require('cross-fetch');
 const CortexService = require('./cortex.service');
 const CortexIAM = require('./cortex.iam');
+const IntegrationService = require('../integration/integration.service');
 
 class CortexOperation {
   constructor({ userId, context, operation, prompt, profile }) {
@@ -109,6 +110,7 @@ class CortexOperation {
     }
 
     let result = null;
+    let metadata = {};
     let returnObj = {};
     switch (kind) {
       case 'api':
@@ -148,24 +150,33 @@ class CortexOperation {
         };
         break;
       case 'function':
-        const stringFn = data[platform] ? data[platform] : data['default'];
-        const fn = new Function(`return ${stringFn}`)();
-        result = await fn({
-          result: this.userState.operationResult,
-          payload: this.userState.payload,
-          context: this.userState.context,
-          require,
-        });
+        try {
+          const stringFn = data[platform] ? data[platform] : data['default'];
+          const fn = new Function(`return ${stringFn}`)();
+          result = await fn({
+            result: this.userState.operationResult,
+            payload: this.userState.payload,
+            context: this.userState.context,
+            require,
+          });
 
-        await this.updateUserState({
-          index: this.userState.index + 1,
-          operationResult: {
-            ...this.userState.operationResult,
-            [operationId]: result,
-          },
-        });
+          await this.updateUserState({
+            index: this.userState.index + 1,
+            operationResult: {
+              ...this.userState.operationResult,
+              [operationId]: result,
+            },
+          });
 
-        returnObj = { ...this.userState, kind };
+          returnObj = { ...this.userState, kind };
+        } catch (e) {
+          await this.updateUserState(null);
+          returnObj = {
+            ...this.userState,
+            kind: 'error',
+            message: 'Something went wrong when executing a function.',
+          };
+        }
         break;
       case 'input':
         if (this.userState.stepState === 'none') {
@@ -183,6 +194,35 @@ class CortexOperation {
 
           returnObj = { ...this.userState, kind };
         }
+        break;
+      case 'integration':
+        const { serviceProviderId } = data;
+        const integration = await new IntegrationService({ serviceProviderId }).init();
+        if (integration.isError()) {
+          await this.updateUserState(null);
+          returnObj = {
+            ...this.userState,
+            kind: 'error',
+            message: 'Something went wrong when calling external service provider.',
+          };
+          break;
+        }
+
+        metadata = {
+          ...this.userState.operationResult,
+          ...this.userState.payload,
+        };
+
+        result = await integration.execute({ ...data, metadata });
+
+        await this.updateUserState({
+          index: this.userState.index + 1,
+          operationResult: {
+            ...this.userState.operationResult,
+            [operationId]: result,
+          },
+        });
+        returnObj = { ...this.userState, kind };
         break;
       case 'message':
         await this.updateUserState({ index: this.userState.index + 1 });

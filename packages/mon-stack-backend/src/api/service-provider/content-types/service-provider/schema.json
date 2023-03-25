@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_providers",
+  "info": {
+    "singularName": "service-provider",
+    "pluralName": "service-providers",
+    "displayName": "Service Provider",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "provider": {
+      "type": "enumeration",
+      "enum": ["google"],
+      "required": true
+    },
+    "service": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "environment": {
+      "type": "enumeration",
+      "enum": ["staging", "production"]
+    },
+    "credential": {
+      "type": "richtext",
+      "required": false
+    },
+    "metadata": {
+      "type": "json"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

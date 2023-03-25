@@ -18,6 +18,7 @@
     "@babel/runtime": "^7.21.0"
   },
   "dependencies": {
+    "@google-cloud/bigquery": "^6.2.0",
     "@slack/bolt": "^3.12.2",
     "@strapi/design-system": "^1.6.5",
     "@strapi/plugin-i18n": "4.7.0",

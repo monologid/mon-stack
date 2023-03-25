@@ -1,6 +1,8 @@
 'use strict';
 
 const CortexBootStrap = require('./modules/cortex/cortex.bootstrap');
+const GoogleBigQuery = require('./modules/integration/google.bigquery');
+const IntegrationService = require('./modules/integration/integration.service');
 
 module.exports = {
   /**
