@@ -4,7 +4,7 @@ import {
   commonFormBaseClassName,
   commonFormClassNames,
   commonFormInputClassName,
-} from '@/components/commons/index.types';
+} from '@/components/shared/index.types';
 import { SelectHTMLAttributes } from 'react';
 
 export interface SelectProps

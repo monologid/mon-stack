@@ -5,7 +5,7 @@ import {
   commonFormBaseClassName,
   commonFormClassNames,
   commonFormInputClassName,
-} from '@/components/commons/index.types';
+} from '@/components/shared/index.types';
 
 export interface InputProps
   extends InputHTMLAttributes<HTMLInputElement>,

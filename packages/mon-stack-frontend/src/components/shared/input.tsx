@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { StyleUtils } from '@/styles/utils';
-import { InputProps, InputVariant } from '@/components/commons/input.types';
+import { InputProps, InputVariant } from '@/components/shared/input.types';
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ variant, fontSize, className, ...props }, ref) => {

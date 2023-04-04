@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { FieldSchema, FormProps, SelectOptionSchema } from '@/components/commons/form.types';
-import { Input } from '@/components/commons/input';
-import { Select } from '@/components/commons/select';
+import { FieldSchema, FormProps, SelectOptionSchema } from '@/components/shared/form.types';
+import { Input } from '@/components/shared/input';
+import { Select } from '@/components/shared/select';
 
 export const Form: FC<FormProps> = ({ fields, data, setData, className }) => {
   const onChange = (e: any) => {
@@ -55,7 +55,7 @@ const renderField = (field: FieldSchema, onChange: any, className: any) => {
           {field.options?.map((option: SelectOptionSchema, i: number) => (
             <div key={i} className={'flex items-center space-x-3'}>
               <Input type={field.kind} onChange={onChange} {...field} value={option.value} />
-              <div className={`text-black  text-sm ${className?.label || null}`}>{option.label}</div>
+              <div className={`text-black text-sm ${className?.label || null}`}>{option.label}</div>
             </div>
           ))}
         </div>

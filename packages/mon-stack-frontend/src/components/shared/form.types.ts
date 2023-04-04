@@ -22,6 +22,7 @@ export interface FieldSchema {
   label: string;
   description?: string;
   options?: SelectOptionSchema[];
+  className?: string;
 }
 
 export interface SelectOptionSchema {

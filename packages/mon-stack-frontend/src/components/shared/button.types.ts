@@ -1,6 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { ButtonHTMLAttributes } from 'react';
-import { commonFontSizeClassNames } from '@/components/commons/index.types';
+import { commonFontSizeClassNames } from '@/components/shared/index.types';
 
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,

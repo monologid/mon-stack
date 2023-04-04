@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { DialogProps } from '@/components/commons/dialog.types';
+import { DialogProps } from '@/components/shared/dialog.types';
 import { X } from 'lucide-react';
 
 export const Dialog: FC<DialogProps> = ({ title, show, onClose, children }) => {

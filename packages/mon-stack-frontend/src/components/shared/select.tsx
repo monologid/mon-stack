@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { SelectProps, SelectVariant } from '@/components/commons/select.types';
+import { SelectProps, SelectVariant } from '@/components/shared/select.types';
 import { StyleUtils } from '@/styles/utils';
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
