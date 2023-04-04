@@ -3,7 +3,7 @@ import axios from 'axios';
 export type fetchApiParams = {
   url: string;
   method: string;
-  headers: any;
+  headers?: any;
   data: any;
 };
 

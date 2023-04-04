@@ -1,6 +1,6 @@
 import BaseLayout from '@/layouts/base-layout';
 import { baseGetServerSideProps } from '@/utils/page';
-import { Input } from '@/components/commons';
+import { Input } from '@/components/shared';
 import { TypeAnimation } from 'react-type-animation';
 import useDataState from '@/hooks/use-data-state';
 import SpeechToText from '@/components/speech';
@@ -32,7 +32,7 @@ export default function Home(props: any) {
       const headers: any = {
         'Content-Type': 'application/json',
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjc5NTgwNzYxLCJleHAiOjE2ODIxNzI3NjF9.rgg5WTTFQBPe2v0ad2HeyZTku25kCjphckX2vZxWNOg',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgwMjIyODQ5LCJleHAiOjE2ODI4MTQ4NDl9.rzTb67P6MsL10tGC54onTLf7ZYcKfKUHA3PgpRmlXgs',
       };
       const response = await fetchApi({
         url,
