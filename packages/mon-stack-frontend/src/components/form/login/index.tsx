@@ -51,7 +51,7 @@ export default function FormLogin() {
       const { jwt, user }: any = result.data;
       setCookie(null, 'token', jwt, { maxAge: 24 * 60 * 60, path: '/' });
       setCookie(null, 'profile', JSON.stringify(user), { maxAge: 24 * 60 * 60, path: '/' });
-      window.location.href = '/dashboard';
+      window.location.href = '/auth';
     } catch (e) {
       alert('Something went wrong. Please contact support.');
     }

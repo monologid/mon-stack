@@ -1,8 +1,8 @@
 import { Button, Form } from '@/components/shared';
 import Link from 'next/link';
-import {fetchApi} from "@/utils/fetch-api";
-import {setCookie} from "nookies";
-import {useState} from "react";
+import { fetchApi } from '@/utils/fetch-api';
+import { setCookie } from 'nookies';
+import { useState } from 'react';
 
 export default function FormSignUp() {
   const fields: any = [
@@ -25,7 +25,7 @@ export default function FormSignUp() {
     },
   ];
 
-  const [data, setData] = useState<any>({})
+  const [data, setData] = useState<any>({});
 
   const onClickSignUp = async () => {
     try {
@@ -70,7 +70,12 @@ export default function FormSignUp() {
         </div>
         <div className={'space-y-5'}>
           <Form fields={fields} data={data} setData={setData} className={{ field: 'w-full' }} />
-          <Button type={'submit'} variant={'primary'} className={'w-full font-semibold'} onClick={onClickSignUp}>
+          <Button
+            type={'submit'}
+            variant={'primary'}
+            className={'w-full font-semibold'}
+            onClick={onClickSignUp}
+          >
             Sign Up
           </Button>
           <div className={'text-center text-sm space-x-1'}>
