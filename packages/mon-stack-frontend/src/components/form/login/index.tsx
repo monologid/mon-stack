@@ -57,8 +57,12 @@ export default function FormLogin() {
     }
   };
 
+  const onKeyDown = async (e: any) => {
+    if (e.key === 'Enter') await onClickLogin();
+  };
+
   return (
-    <div className='flex justify-center items-center h-screen'>
+    <div className={'flex justify-center items-center h-screen'} onKeyDown={onKeyDown}>
       <div className={'w-full md:max-w-[360px]'}>
         <div className={'mb-8 space-y-2'}>
           <h1 className={'font-bold text-2xl text-center'}>Log in to your account</h1>

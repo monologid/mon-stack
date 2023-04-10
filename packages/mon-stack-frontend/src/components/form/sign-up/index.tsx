@@ -61,8 +61,12 @@ export default function FormSignUp() {
     }
   };
 
+  const onKeyDown = async (e: any) => {
+    if (e.key === 'Enter') await onClickSignUp();
+  };
+
   return (
-    <div className='flex justify-center items-center h-screen'>
+    <div className={'flex justify-center items-center h-screen'} onKeyDown={onKeyDown}>
       <div className={'w-full md:max-w-[360px]'}>
         <div className={'mb-8 space-y-2'}>
           <h1 className={'font-bold text-2xl text-center'}>Create new account</h1>
