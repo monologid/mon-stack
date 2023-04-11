@@ -1,4 +1,4 @@
-import { Table, TableColumn } from '@/components/shared';
+import { Heading, Table, TableColumn } from '@/components/shared';
 import AdminLayout from '@/layouts/admin-layout';
 import { adminGetServerSideProps } from '@/utils/page';
 
@@ -12,11 +12,15 @@ export default function AdminDashboard(props: any) {
 
   return (
     <AdminLayout title={'Intent classNameifications'} {...props}>
+      <Heading variant='h1'>Intent Classifications</Heading>
       <Table columns={['Intent', 'Description', 'Actions']}>
         {data.map((d: any, i: number) => (
           <tr key={i}>
             <TableColumn>{d.intent}</TableColumn>
             <TableColumn>{d.description}</TableColumn>
+            <TableColumn>
+              <div></div>
+            </TableColumn>
           </tr>
         ))}
       </Table>
