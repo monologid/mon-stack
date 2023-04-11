@@ -36,9 +36,7 @@ const AdminLayout: FC<AdminLayoutProps> = (props) => {
             </ul>
           </nav>
         </div>
-        <div className={'w-full col-span-10 h-screen p-5 overflow-y-auto'}>
-          {props.children}
-        </div>
+        <div className={'w-full col-span-10 h-screen p-5 overflow-y-auto'}>{props.children}</div>
       </div>
     </BaseLayout>
   );

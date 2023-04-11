@@ -1,8 +1,9 @@
-import { MouseEventHandler, PropsWithChildren } from "react";
+import { MouseEventHandler, PropsWithChildren } from 'react';
 
 export interface ModalProps extends PropsWithChildren {
-  title: string
-  isOpen: boolean
-  footer?: any
-  onClose?: MouseEventHandler<HTMLDivElement>
+  title: string;
+  footer?: any;
+  isLoading?: boolean;
+  isOpen: boolean;
+  onClose?: MouseEventHandler<HTMLDivElement>;
 }

@@ -14,7 +14,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
 
   const themeProviderProps: any = {
     attribute: 'class',
-    forcedTheme: theme || null,
+    forcedTheme: 'light' || null,
     enableSystem: true,
   };
 
