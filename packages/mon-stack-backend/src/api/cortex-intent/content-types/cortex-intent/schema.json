@@ -4,7 +4,8 @@
   "info": {
     "singularName": "cortex-intent",
     "pluralName": "cortex-intents",
-    "displayName": "Cortex Intent"
+    "displayName": "Cortex Intent",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -13,7 +14,8 @@
   "attributes": {
     "intent": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "description": {
       "type": "text"
