@@ -1,5 +1,11 @@
 # Feature Roadmap
 
+## Google API
+
+| Description | Status |
+|-------------|--------|
+
+
 ## Cortex
 
 | Description                                                                                  | Status  |
