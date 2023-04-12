@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       headers: {
         'Content-Type': req.headers['content-type'] ? req.headers['content-type'] : 'application/json',
       },
-      data: payload,
+      data: payload ? payload : {},
     };
 
     const { token }: any = parseCookies({ req });

@@ -4,11 +4,12 @@ import useDataState from '@/hooks/use-data-state';
 import AdminLayout from '@/layouts/admin-layout';
 import { fetchApi } from '@/utils/fetch-api';
 import { adminGetServerSideProps } from '@/utils/page';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export const getServerSideProps = adminGetServerSideProps;
 
-export default function AdminDashboard(props: any) {
+export default function AdminIntentClassifications(props: any) {
   const [state, setState] = useDataState({
     isLoading: false,
     showAddIntentModal: false,
@@ -79,7 +80,11 @@ export default function AdminDashboard(props: any) {
       <Table columns={['Intent', 'Description']}>
         {state.intents.map((d: any, i: number) => (
           <tr key={i}>
-            <TableColumn>{d.attributes.intent}</TableColumn>
+            <TableColumn>
+              <Link href={`/administrator/intent-classifications/${d.attributes.intent}`} className={'hover:underline'}>
+                {d.attributes.intent}
+              </Link>
+            </TableColumn>
             <TableColumn>{d.attributes.description}</TableColumn>
           </tr>
         ))}
@@ -89,6 +94,7 @@ export default function AdminDashboard(props: any) {
         title={'Add new Intent'}
         isLoading={state.isLoading}
         isOpen={state.showAddIntentModal}
+        loadingMessage={'Creating new intent ...'}
         onClose={() => setState({ showAddIntentModal: false })}
         footer={
           <div className={'w-full flex justify-end items-center space-x-2'}>

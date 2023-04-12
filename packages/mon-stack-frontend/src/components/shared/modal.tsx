@@ -3,7 +3,7 @@ import { ModalProps } from './modal.types';
 import { Heading } from './heading';
 import { Loader, Loader2 } from 'lucide-react';
 
-export const Modal: FC<ModalProps> = ({ title, isOpen, footer, onClose, isLoading, children }) => {
+export const Modal: FC<ModalProps> = ({ title, footer, isLoading, isOpen, loadingMessage, onClose, children }) => {
   const backgroundClasses = isOpen
     ? 'fixed z-10 inset-0 bg-black bg-opacity-50 transition-opacity duration-300'
     : 'hidden';
@@ -49,7 +49,7 @@ export const Modal: FC<ModalProps> = ({ title, isOpen, footer, onClose, isLoadin
             }
           >
             <Loader2 className={'animate-spin'} />
-            <div>Creating new intent...</div>
+            <div>{loadingMessage || 'Loading ...'}</div>
           </div>
         )}
       </div>

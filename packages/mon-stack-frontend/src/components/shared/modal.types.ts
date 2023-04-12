@@ -5,5 +5,6 @@ export interface ModalProps extends PropsWithChildren {
   footer?: any;
   isLoading?: boolean;
   isOpen: boolean;
+  loadingMessage?: string;
   onClose?: MouseEventHandler<HTMLDivElement>;
 }
