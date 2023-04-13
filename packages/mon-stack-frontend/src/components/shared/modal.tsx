@@ -3,7 +3,15 @@ import { ModalProps } from './modal.types';
 import { Heading } from './heading';
 import { Loader, Loader2 } from 'lucide-react';
 
-export const Modal: FC<ModalProps> = ({ title, footer, isLoading, isOpen, loadingMessage, onClose, children }) => {
+export const Modal: FC<ModalProps> = ({
+  title,
+  footer,
+  isLoading,
+  isOpen,
+  loadingMessage,
+  onClose,
+  children,
+}) => {
   const backgroundClasses = isOpen
     ? 'fixed z-10 inset-0 bg-black bg-opacity-50 transition-opacity duration-300'
     : 'hidden';
@@ -16,13 +24,19 @@ export const Modal: FC<ModalProps> = ({ title, footer, isLoading, isOpen, loadin
 
       <div className={modalClasses}>
         {!isLoading ? (
-          <div className={'flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'}>
+          <div
+            className={
+              'flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'
+            }
+          >
             <div className={'fixed inset-0 transition-opacity'}>
               <div className={'absolute inset-0 bg-white opacity-75'}></div>
             </div>
 
             <div
-              className={'inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all my-8 w-full max-w-lg'}
+              className={
+                'inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all my-8 w-full max-w-lg'
+              }
               role={'dialog'}
               aria-modal={'true'}
               aria-labelledby={'modal-headline'}

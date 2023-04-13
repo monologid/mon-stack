@@ -1,19 +1,14 @@
 import { Form } from '@/components/shared';
 import { FC } from 'react';
-import { FormIntentProps } from './index.types';
+import { FormPromptProps } from './index.types';
 
-export const FormIntentCreate: FC<FormIntentProps> = ({ data, setData }) => {
+export const FormPromptCreate: FC<FormPromptProps> = ({ data, setData }) => {
   const fields: any = [
     {
       kind: 'text',
-      name: 'intent',
-      label: 'Intent',
+      name: 'prompt',
+      label: 'Prompt',
       className: 'w-full',
-    },
-    {
-      kind: 'text',
-      name: 'description',
-      label: 'Description',
     },
   ];
 

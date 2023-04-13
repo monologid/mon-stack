@@ -1,43 +1,52 @@
-import { Button, Heading, Modal, Table, TableColumn } from "@/components/shared";
-import useDataState from "@/hooks/use-data-state";
-import AdminLayout from "@/layouts/admin-layout";
-import { fetchApi } from "@/utils/fetch-api";
-import { adminGetServerSideProps } from "@/utils/page";
-import { NextPageContext } from "next";
-import Link from "next/link";
+import { FormPromptCreate } from '@/components/form/prompt';
+import { Button, Heading, Modal, Table, TableColumn } from '@/components/shared';
+import useDataState from '@/hooks/use-data-state';
+import AdminLayout from '@/layouts/admin-layout';
+import { fetchApi } from '@/utils/fetch-api';
+import { adminGetServerSideProps } from '@/utils/page';
+import { NextPageContext } from 'next';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   let { props, redirect }: any = await adminGetServerSideProps(ctx);
-  if (redirect) return { redirect }
+  if (redirect) return { redirect };
 
-  const { intent }: any = ctx.query
-  if (!intent) return {
-    redirect: {
-      destination: '/error?message=Invalid intent&prevUrl=/administrator/intent-classifications'
-    }
-  }
+  const { intent }: any = ctx.query;
+  if (!intent)
+    return {
+      redirect: {
+        destination: '/error?message=Invalid intent&prevUrl=/administrator/intent-classifications',
+      },
+    };
 
-  const url: string = `${process.env.BASE_URL}/api/v1/backend`
+  const url: string = `${process.env.BASE_URL}/api/v1/backend`;
   let body: any = {
     method: 'GET',
-    api: `/api/cortex-intents?filters[intent][$eq]=${intent}`
-  }
+    api: `/api/cortex-intents?filters[intent][$eq]=${intent}`,
+  };
   let result: any = await fetchApi({ url, method: 'POST', headers: ctx.req?.headers, data: body });
-  if (result.data && result.data.length > 0) props.intentDetail = result.data[0].attributes
-  props.intent = intent
+  if (!result.data)
+    return {
+      redirect: {
+        destination: '/error?message=Invalid intent&prevUrl=/administrator/intent-classifications',
+      },
+    };
+  if (result.data && result.data.length > 0) props.intentDetail = result.data[0].attributes;
+  props.intent = intent;
 
   body = {
     method: 'GET',
-    api: `/api/cortex-prompts?filters[intent][$eq]=${intent}`
-  }
+    api: `/api/cortex-prompts?filters[intent][$eq]=${intent}`,
+  };
   result = await fetchApi({ url, method: 'POST', headers: ctx.req?.headers, data: body });
-  if (result.data && result.data.length > 0) props.prompts = result.data
-  props.intent = intent
+  if (result.data && result.data.length > 0) props.prompts = { ...result };
+  props.intent = intent;
 
   return {
-    props
-  }
-}
+    props,
+  };
+};
 
 export default function AdminIntentClassificationsDetail(props: any) {
   const [state, setState] = useDataState({
@@ -46,9 +55,37 @@ export default function AdminIntentClassificationsDetail(props: any) {
     intents: [],
   });
 
-  const onClickFormAddPromptSubmit = async () => {
+  const [formData, setFormData] = useState<any>({});
 
-  }
+  const onClickFormAddPromptSubmit = async () => {
+    setState({ isLoading: true });
+    const url: string = '/api/v1/backend';
+    const body: any = {
+      method: 'POST',
+      api: '/api/cortex-prompts',
+      payload: {
+        data: { intent: props.intent, ...formData },
+      },
+    };
+
+    const result = await fetchApi({ url, method: 'POST', data: body });
+    if (result.error) {
+      const { errors }: any = result.error.details;
+      let errorMsg: string = '';
+      let tempMsg: string = '';
+      if (Array.isArray(errors)) {
+        errors.forEach((err: any) => (tempMsg += `- ${err.message}\n`));
+        errorMsg += `Errors:\n${tempMsg}`;
+      } else {
+        errorMsg = result.error.message;
+      }
+      setState({ isLoading: false });
+      alert(errorMsg);
+      return;
+    }
+
+    window.location.reload();
+  };
 
   return (
     <AdminLayout title={'Intent Classifications'} {...props}>
@@ -75,7 +112,7 @@ export default function AdminIntentClassificationsDetail(props: any) {
         </Table>
 
         <Table columns={['Prompt', 'Locale']}>
-          {props.prompts.map((prompt: any, i: number) => (
+          {props.prompts.data.map((prompt: any, i: number) => (
             <tr key={i}>
               <TableColumn>{prompt.attributes.prompt}</TableColumn>
               <TableColumn>{prompt.attributes.locale}</TableColumn>
@@ -84,7 +121,8 @@ export default function AdminIntentClassificationsDetail(props: any) {
         </Table>
       </div>
 
-      <Modal title={'Add new Prompt'}
+      <Modal
+        title={'Add new Prompt'}
         isLoading={state.isLoading}
         isOpen={state.showAddPromptModal}
         onClose={() => setState({ showAddPromptModal: false })}
@@ -97,9 +135,10 @@ export default function AdminIntentClassificationsDetail(props: any) {
               Submit
             </Button>
           </div>
-        }>
-
+        }
+      >
+        <FormPromptCreate data={formData} setData={setFormData} />
       </Modal>
     </AdminLayout>
-  )
+  );
 }

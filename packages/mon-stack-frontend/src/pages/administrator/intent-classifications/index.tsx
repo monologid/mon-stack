@@ -81,7 +81,10 @@ export default function AdminIntentClassifications(props: any) {
         {state.intents.map((d: any, i: number) => (
           <tr key={i}>
             <TableColumn>
-              <Link href={`/administrator/intent-classifications/${d.attributes.intent}`} className={'hover:underline'}>
+              <Link
+                href={`/administrator/intent-classifications/${d.attributes.intent}`}
+                className={'hover:underline'}
+              >
                 {d.attributes.intent}
               </Link>
             </TableColumn>
