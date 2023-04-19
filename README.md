@@ -85,7 +85,7 @@ cp .env.example .env
 
 Then configure each environment variables.
 
-Start the backend server using following command.
+Start the frontend server using following command.
 
 ```bash
 cd ./packages/mon-stack-frontend
