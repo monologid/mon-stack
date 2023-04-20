@@ -34,6 +34,20 @@ Now install the dependencies for mon-stack-backend:
 pnpm backend install:yarn
 ```
 
+##### For first-time setup only
+
+You need to setup an administrator account.
+
+Open your browser and access `http://localhost:1337/admin`.
+
+Fulfill all the required fields to create new administrator account.
+
+Once you are done, now you need to whitelist the existings APIs.
+
+In the sidebar, click `Settings`. Under the `Users & Permissions Plugin`, click the `Roles` menu.
+
+Click the `Authenticated` role. And enable all related to Cortex.
+
 #### mon-stack-frontend
 
 Before installing dependencies, please install the latest version of yarn & pnpm.
