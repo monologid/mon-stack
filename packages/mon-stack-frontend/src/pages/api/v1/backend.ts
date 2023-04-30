@@ -30,7 +30,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (token) opts.headers['Authorization'] = `Bearer ${token}`;
 
     const response: any = await fetchApi(opts);
-    if (response.error) return apiUtil.json({ ...response });
+    if (response.error) {
+      return apiUtil.errorLog({ error: { status: 500, detail: response.error } }).json({ ...response });
+    }
 
     apiUtil.json({ data: response.data ? response.data : response });
   } catch (e: any) {

@@ -6,8 +6,16 @@ import useDataState from '@/hooks/use-data-state';
 import SpeechToText from '@/components/speech';
 import { RenderMarkdown } from '@/components/render';
 import { fetchApi } from '@/utils/fetch-api';
+import { NextPageContext } from 'next';
 
-export const getServerSideProps = baseGetServerSideProps;
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return {
+    redirect: {
+      destination: '/login',
+      permanent: false,
+    },
+  };
+};
 
 export default function Home(props: any) {
   const [state, setState] = useDataState({
