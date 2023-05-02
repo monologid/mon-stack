@@ -2,6 +2,7 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'next-themes';
 import { AnimatePresence } from 'framer-motion';
+import 'regenerator-runtime/runtime';
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const { theme }: any = Component;
